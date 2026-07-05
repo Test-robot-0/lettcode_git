@@ -54,7 +54,6 @@ def upload_file(path, content, message, generate, new_current_id):
     
 
     if r.status_code == 200 or 201:
-        print(r.json())
         new_sha = r.json()["content"]["sha"]
 
         if generate.lower() == "root_readme":
