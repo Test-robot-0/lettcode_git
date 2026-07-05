@@ -1,4 +1,5 @@
 name: Run Python Playwright Project
+
 permissions:
   contents: write
 
@@ -32,7 +33,7 @@ jobs:
         run: |
           python --version
           which xvfb-run
-          
+
       - name: Create .env
         run: |
           cat <<EOF > .env
@@ -52,7 +53,7 @@ jobs:
           path: |
             page.html
             page.png
-            
+
       - name: Commit changes
         run: |
           git config --global user.name "github-actions[bot]"
@@ -60,15 +61,29 @@ jobs:
 
           git add database/database.db
 
-          git diff --staged --quiet || git commit -m "Update database"
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Update database"
+          fi
+
       - name: Debug Git
         run: |
-          git branch
+          echo "===== STATUS ====="
           git status
+
+          echo "===== BRANCH ====="
+          git branch -vv
+
+          echo "===== LOCAL COMMITS ====="
           git log --oneline --decorate -5
+
+          echo "===== REMOTE HEAD ====="
+          git ls-remote origin refs/heads/main
+
+          echo "===== REMOTES ====="
           git remote -v
-          git rev-parse HEAD
 
       - name: Push changes
         run: |
-          git push origin main
+          git push origin HEAD:main
