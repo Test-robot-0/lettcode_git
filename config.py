@@ -5,7 +5,7 @@ load_dotenv(".env")
 
 DATABASE = "database/database.db"
 
-TOKEN = os.getenv("TOKEN_GITHUB")
+TOKEN = os.getenv("GITHUB_TOKEN")
 
 OWNER = "Test-robot-0"
 
