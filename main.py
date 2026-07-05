@@ -10,13 +10,12 @@ cookies = config.COOKIES
 length = repository.get_size_id()
 
 
-get_question("asteroid-collision", 1)
-print("----"*50)
-
 set_problem_info(length)
 
 current_id, title_slug, status = repository.get_submission_info()
 if status == 1:
+    get_question(title_slug, current_id)
+    print("-------------"*50)
     set_submission_info(current_id, title_slug)
 
 
