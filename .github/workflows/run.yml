@@ -61,6 +61,13 @@ jobs:
           git add database/database.db
 
           git diff --staged --quiet || git commit -m "Update database"
+      - name: Debug Git
+        run: |
+          git branch
+          git status
+          git log --oneline --decorate -5
+          git remote -v
+          git rev-parse HEAD
 
       - name: Push changes
         run: |
