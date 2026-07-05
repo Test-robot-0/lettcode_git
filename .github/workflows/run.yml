@@ -28,6 +28,14 @@ jobs:
         run: |
           python --version
           which xvfb-run
+          
+      - name: Create .env
+        run: |
+          cat <<EOF > .env
+          LEETCODE_SESSION=${{ secrets.LEETCODE_SESSION }}
+          CSRFTOKEN=${{ secrets.CSRFTOKEN }}
+          GITHUB_TOKEN=${{ secrets.MY_GITHUB_TOKEN }}
+          EOF
 
       - name: Run main.py
         run: xvfb-run -a python main.py
