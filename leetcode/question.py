@@ -14,7 +14,9 @@ def get_question(title_slug, current_id):
         page = browser.new_page()
     
         page.goto(URL, wait_until="domcontentloaded")
-        page.wait_for_timeout(1000)
+        page.wait_for_timeout(5000)
+
+        page.screenshot(path="page.png", full_page=True)
         
         next_data = page.locator("#__NEXT_DATA__").text_content()
         json_data = json.loads(next_data) 
