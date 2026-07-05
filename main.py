@@ -10,6 +10,8 @@ cookies = config.COOKIES
 length = repository.get_size_id()
 
 
+get_question("asteroid-collision", 1)
+print("----"*50)
 
 set_problem_info(length)
 
