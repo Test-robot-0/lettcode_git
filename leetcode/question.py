@@ -1,12 +1,11 @@
-from playwright.sync_api import sync_playwright
 import json
 import config
 import database.repository as repository
+from playwright.sync_api import sync_playwright
 
 def get_question(title_slug, current_id):
 
     URL = f"{config.QUESTION_URL}{title_slug}/description"
-    
     
     with sync_playwright() as p:
 
@@ -14,6 +13,10 @@ def get_question(title_slug, current_id):
         page = browser.new_page()
     
         page.goto(URL, wait_until="domcontentloaded")
+        
+        print(URL)
+        print(page.evaluate("navigator.userAgent"))
+        
         page.wait_for_timeout(5000)
 
         page.screenshot(path="page.png", full_page=True)
