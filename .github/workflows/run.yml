@@ -64,5 +64,4 @@ jobs:
 
       - name: Push changes
         run: |
-          git pull --rebase origin main
           git push origin main
