@@ -20,7 +20,12 @@ def get_question(title_slug, current_id):
         
         next_data = page.locator("#__NEXT_DATA__").text_content()
         json_data = json.loads(next_data) 
-   
+
+        print(page.title())
+        print(page.url)
+
+        with open("page.html", "w", encoding="utf-8") as f:
+            f.write(page.content())
 
         if next_data:
             question = json_data["props"]["pageProps"]["dehydratedState"]["queries"][1]["state"]["data"]["question"]["content"]
