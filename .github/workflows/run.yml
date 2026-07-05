@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -61,4 +63,6 @@ jobs:
           git diff --staged --quiet || git commit -m "Update database"
 
       - name: Push changes
-        run: git push
+        run: |
+          git pull --rebase origin main
+          git push origin main
