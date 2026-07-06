@@ -5,26 +5,34 @@ import requests
 
 def get_question(title_slug, current_id):
 
-    URl = f"https://alfa-leetcode-api.onrender.com/select/raw?titleSlug={title_slug}"
+    GRAPHQL_URL = config.GRAPHQL_URL
+    QUERY = config.QUERY
 
-    r = requests.get(URl)
-    
-    if r.status_code == 429:
-        print(r.content)
-        print("Error in question")
-        repository.error_update_1()
-        
+    r = requests.post(
+        GRAPHQL_URL,
+        headers={
+            "Content-Type": "application/json",
+            "Referer": "https://leetcode.com",
+        },
+        json={
+            "query": QUERY,
+            "variables": {
+                "titleSlug": title_slug
+            }
+        },
+        timeout=30,
+    )
 
     if r.status_code == 200:
         data = r.json()
         
-        question = data["question"]["content"]
-        stats = data["question"]["stats"]
+        question = data["data"]["question"]["content"]
+        stats = data["data"]["question"]["stats"]
 
         repository.update_question(question, stats, current_id)
-    
+
     else:
         print("Error code", r.status_code)
 
     print("(4/7) Done getting question", r.status_code)
-
+    
