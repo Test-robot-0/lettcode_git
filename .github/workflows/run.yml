@@ -1,7 +1,4 @@
-name: Run Python Playwright Project
-
-permissions:
-  contents: write
+name: Run Python Project
 
 on:
   workflow_dispatch:
@@ -13,8 +10,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -23,16 +18,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          sudo apt-get update
-          sudo apt-get install -y xvfb
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          playwright install --with-deps chromium
-
-      - name: Verify installation
-        run: |
-          python --version
-          which xvfb-run
 
       - name: Create .env
         run: |
@@ -43,47 +30,4 @@ jobs:
           EOF
 
       - name: Run main.py
-        run: xvfb-run -a python main.py
-
-      - name: Upload artifacts
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: playwright-output
-          path: |
-            page.html
-            page.png
-
-      - name: Commit changes
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-          git add database/database.db
-
-          if git diff --cached --quiet; then
-            echo "No changes to commit."
-          else
-            git commit -m "Update database"
-          fi
-
-      - name: Debug Git
-        run: |
-          echo "===== STATUS ====="
-          git status
-
-          echo "===== BRANCH ====="
-          git branch -vv
-
-          echo "===== LOCAL COMMITS ====="
-          git log --oneline --decorate -5
-
-          echo "===== REMOTE HEAD ====="
-          git ls-remote origin refs/heads/main
-
-          echo "===== REMOTES ====="
-          git remote -v
-
-      - name: Push changes
-        run: |
-          git push origin HEAD:main
+        run: python main.py
