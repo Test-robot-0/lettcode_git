@@ -13,6 +13,8 @@ REPO = "leetcode"
 
 URL = f"https://api.github.com/repos/{OWNER}/{REPO}/contents/leetcode-solutions/"
 
+GRAPHQL_URL = "https://leetcode.com/graphql"
+
 QUESTION_URL = f"https://leetcode.com/problems/"
 
 COOKIES = {
