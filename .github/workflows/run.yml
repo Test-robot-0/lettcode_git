@@ -41,6 +41,3 @@ jobs:
           commit_message: "Update database"
           file_pattern: database/database.db
 
-      - name: Push changes
-        run: |
-          git push
