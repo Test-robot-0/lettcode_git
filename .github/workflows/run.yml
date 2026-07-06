@@ -35,18 +35,11 @@ jobs:
       - name: Run main.py
         run: python main.py
 
-      - name: Commit database changes
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-          git add database/database.db
-
-          if git diff --cached --quiet; then
-            echo "No database changes."
-          else
-            git commit -m "Update database"
-          fi
+      - name: Commit and push changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Update database"
+          file_pattern: database/database.db
 
       - name: Push changes
         run: |
